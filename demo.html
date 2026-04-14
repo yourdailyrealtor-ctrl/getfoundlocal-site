@@ -8,108 +8,183 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-    :root{--cream:#f5f2ec;--cream2:#ede9e0;--navy:#1a1f3a;--navy2:#252b4a;--gold:#c8963c;--gold2:#e8b96a;--white:#fff;--muted:#6b7280;--border:rgba(26,31,58,.1)}
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:auto}
-    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);overflow-x:hidden}
+    :root{--cream:#f5f2ec;--navy:#1a1f3a;--navy2:#252b4a;--gold:#c8963c;--gold2:#e8b96a;--muted:#6b7280;--border:rgba(26,31,58,.1)}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:'DM Sans',sans-serif;background:var(--navy);color:white;overflow-x:hidden}
     a{text-decoration:none;color:inherit}
 
-    nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:rgba(245,242,236,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-    .logo{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--navy)}.logo em{font-style:italic;color:var(--gold)}
-    .nav-links{display:flex;align-items:center;gap:4px}.nav-links a{padding:7px 14px;font-size:.85rem;font-weight:500;color:var(--muted);border-radius:8px;transition:color .2s,background .2s}.nav-links a:hover,.nav-links a.active{color:var(--navy);background:rgba(26,31,58,.06)}
-    .nav-cta{background:var(--navy)!important;color:white!important;border-radius:50px!important;padding:8px 22px!important;font-weight:600!important}.nav-cta:hover{background:var(--navy2)!important}
-    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}.hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px}
-    .mob{display:none;position:fixed;top:66px;left:0;right:0;background:rgba(245,242,236,.97);border-bottom:1px solid var(--border);padding:14px 24px;flex-direction:column;gap:2px;z-index:999}.mob.open{display:flex}.mob a{padding:11px 14px;font-size:.92rem;color:var(--muted);border-radius:8px;font-weight:500}.mob a:hover{color:var(--navy);background:rgba(26,31,58,.04)}
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:rgba(10,10,16,.7);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .logo{font-family:'DM Serif Display',serif;font-size:1.2rem;color:white}.logo em{font-style:italic;color:var(--gold)}
+    .nav-links{display:flex;align-items:center;gap:4px}.nav-links a{padding:7px 14px;font-size:.85rem;font-weight:500;color:rgba(255,255,255,.45);border-radius:8px;transition:color .2s,background .2s}.nav-links a:hover,.nav-links a.active{color:white;background:rgba(255,255,255,.06)}
+    .nav-cta{background:var(--gold)!important;color:var(--navy)!important;border-radius:50px!important;padding:8px 22px!important;font-weight:700!important;color:white!important}.nav-cta:hover{background:var(--gold2)!important}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}.hamburger span{display:block;width:22px;height:2px;background:white;border-radius:2px}
+    .mob{display:none;position:fixed;top:66px;left:0;right:0;background:rgba(10,10,16,.97);border-bottom:1px solid rgba(255,255,255,.06);padding:14px 24px;flex-direction:column;gap:2px;z-index:999}.mob.open{display:flex}.mob a{padding:11px 14px;font-size:.92rem;color:rgba(255,255,255,.5);border-radius:8px;font-weight:500}.mob a:hover{color:white;background:rgba(255,255,255,.06)}
 
-    /* ── INTRO ── */
-    .intro{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 48px;background:var(--cream);position:relative;overflow:hidden}
-    .intro::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.4}
-    .intro-inner{position:relative;z-index:1}
-    .intro-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:28px}
-    .tag-l{width:28px;height:1px;background:var(--gold)}.tag-t{font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
-    .intro h1{font-family:'DM Serif Display',serif;font-size:clamp(3rem,7vw,6rem);letter-spacing:-2px;line-height:.95;color:var(--navy);margin-bottom:20px}
-    .intro h1 em{font-style:italic;color:var(--gold)}
-    .intro p{font-size:1.05rem;color:var(--muted);max-width:480px;margin:0 auto 16px;line-height:1.8;font-weight:300}
-    .intro-note{font-size:.8rem;color:rgba(26,31,58,.35);letter-spacing:.5px}
-    .scroll-arrow{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;animation:bob 2s ease infinite}
-    .scroll-arrow span{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-    .arrow-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--gold),transparent)}
-    .arrow-dot{width:6px;height:6px;background:var(--gold);border-radius:50%}
-    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+    /* THE CINEMATIC STAGE — one full screen, pinned */
+    .stage-spacer{height:600vh} /* scroll distance for the whole show */
+    .stage{
+      position:fixed;top:0;left:0;right:0;bottom:0;
+      overflow:hidden;
+      background:var(--navy);
+    }
 
-    /* ── PINNED SCENES ── */
-    /* Each scene is pinned with ScrollTrigger so it stays on screen while animating */
-    .pin-wrap{position:relative}
+    /* Background gradient that shifts */
+    .bg-layer{
+      position:absolute;inset:0;
+      background:radial-gradient(ellipse at 20% 50%, rgba(200,150,60,.12) 0%, transparent 60%),
+                 radial-gradient(ellipse at 80% 30%, rgba(26,31,58,1) 0%, transparent 70%);
+      transition:none;
+    }
+    .bg-orb{
+      position:absolute;border-radius:50%;pointer-events:none;
+      width:600px;height:600px;
+      background:radial-gradient(circle,rgba(200,150,60,.18) 0%,transparent 65%);
+      top:50%;left:50%;transform:translate(-50%,-50%);
+    }
+    .bg-orb2{
+      position:absolute;border-radius:50%;pointer-events:none;
+      width:300px;height:300px;
+      background:radial-gradient(circle,rgba(200,150,60,.1) 0%,transparent 65%);
+      top:20%;right:15%;
+    }
 
-    /* Scene: Text reveal on scroll */
-    .scene-text{height:200vh;background:var(--navy);position:relative}
-    .scene-text-inner{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 52px;overflow:hidden}
-    .text-reveal-words{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:800;color:white;line-height:1.05;letter-spacing:-2px;text-align:center;max-width:900px}
-    .word{display:inline-block;opacity:.12;transform:translateY(20px);margin:0 8px;transition:none}
-    .scene-text-label{position:absolute;top:80px;left:52px;font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+    /* Grid overlay */
+    .grid-bg{
+      position:absolute;inset:0;opacity:0;
+      background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+      background-size:80px 80px;
+    }
 
-    /* Scene: Cards cascade */
-    .scene-cards{height:250vh;background:var(--cream2);position:relative}
-    .scene-cards-inner{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 52px;overflow:hidden}
-    .scene-cards-label{font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:10px}
-    .scene-cards-label::before{content:'';width:28px;height:1px;background:var(--gold)}
-    .scene-cards h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);color:var(--navy);letter-spacing:-1px;margin-bottom:48px}
-    .scene-cards h2 em{font-style:italic;color:var(--gold)}
-    .cards-row{display:flex;gap:16px;flex-wrap:wrap}
-    .anim-card{background:white;border-radius:16px;padding:28px;border:1px solid var(--border);flex:1;min-width:220px;opacity:0;transform:translateY(60px) scale(.95)}
-    .anim-card .card-icon{font-size:1.8rem;margin-bottom:14px}
-    .anim-card h3{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:8px}
-    .anim-card p{font-size:.83rem;color:var(--muted);line-height:1.6}
+    /* All scenes share this wrapper */
+    .scene{
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      padding:80px 80px;
+      opacity:0;
+      pointer-events:none;
+    }
+    .scene.active{pointer-events:auto}
 
-    /* Scene: Counter numbers */
-    .scene-counter{height:200vh;background:var(--navy);position:relative}
-    .scene-counter-inner{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 52px}
-    .counter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:900px;width:100%;text-align:center}
-    .counter-item .count-num{font-family:'Syne',sans-serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:800;color:var(--gold2);line-height:1}
-    .counter-item .count-label{font-size:.82rem;color:rgba(255,255,255,.45);margin-top:8px;letter-spacing:1.5px;text-transform:uppercase}
-    .counter-item .count-suffix{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(2rem,4vw,3.5rem);color:var(--gold2)}
+    /* SCENE 0: Intro */
+    #s0{opacity:1}
+    .s0-inner{text-align:center;max-width:800px}
+    .s0-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:28px}
+    .tag-l{width:28px;height:1px;background:var(--gold);display:inline-block}
+    .tag-t{font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+    .s0-h{font-family:'DM Serif Display',serif;font-size:clamp(3rem,7vw,6rem);letter-spacing:-2px;line-height:.95;margin-bottom:20px}
+    .s0-h em{font-style:italic;color:var(--gold2)}
+    .s0-p{font-size:1rem;color:rgba(255,255,255,.5);line-height:1.8;max-width:440px;margin:0 auto 32px;font-weight:300}
+    .s0-hint{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:8px;animation:bob 2s ease infinite}
+    .hint-t{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+    .hint-line{width:1px;height:32px;background:linear-gradient(to bottom,var(--gold),transparent)}
+    .hint-dot{width:5px;height:5px;background:var(--gold);border-radius:50%}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-    /* Scene: Morphing shapes */
-    .scene-morph{height:300vh;background:var(--cream);position:relative}
-    .scene-morph-inner{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .morph-content{text-align:center;position:relative;z-index:1;padding:0 48px}
-    .morph-content h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);color:var(--navy);letter-spacing:-1px;margin-bottom:16px}
-    .morph-content h2 em{font-style:italic;color:var(--gold)}
-    .morph-content p{font-size:1rem;color:var(--muted);max-width:460px;margin:0 auto;line-height:1.75;font-weight:300}
-    /* Animated background shapes */
-    .morph-shape{position:absolute;border-radius:50%;pointer-events:none}
-    .ms1{width:400px;height:400px;background:radial-gradient(circle,rgba(200,150,60,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
-    .ms2{width:200px;height:200px;background:radial-gradient(circle,rgba(26,31,58,.08) 0%,transparent 70%);top:20%;right:15%}
-    .ms3{width:150px;height:150px;background:radial-gradient(circle,rgba(200,150,60,.1) 0%,transparent 70%);bottom:20%;left:15%}
+    /* SCENE 1: Word by word */
+    #s1 .s1-words{
+      font-family:'Syne',sans-serif;font-size:clamp(2.5rem,5.5vw,5rem);
+      font-weight:800;line-height:1.1;letter-spacing:-2px;text-align:center;max-width:1000px
+    }
+    .w{display:inline-block;opacity:0;transform:translateY(30px) scale(.9);margin:0 6px;color:rgba(255,255,255,.15)}
+    .w.hl{color:var(--gold2)}
 
-    /* Scene: Line drawing */
-    .scene-lines{height:200vh;background:var(--navy2);position:relative}
-    .scene-lines-inner{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 52px;overflow:hidden}
-    .lines-content{text-align:center;position:relative;z-index:1;max-width:700px}
-    .lines-content h2{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:800;color:white;letter-spacing:-1px;margin-bottom:16px}
-    .lines-content p{font-size:1rem;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:36px;font-weight:300}
-    /* Animated horizontal lines */
-    .line-anim{height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:12px 0;transform:scaleX(0);transform-origin:left}
-    .l1{width:80%} .l2{width:60%} .l3{width:90%} .l4{width:50%} .l5{width:70%}
-    .lines-wrap{overflow:hidden;max-width:600px;margin:0 auto}
+    /* SCENE 2: Cards appear */
+    #s2{flex-direction:column;align-items:center;text-align:center;gap:40px}
+    #s2 .s2-h{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);opacity:0;transform:translateY(40px)}
+    #s2 .s2-h em{font-style:italic;color:var(--gold2)}
+    .s2-cards{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;width:100%;max-width:1000px}
+    .s2c{
+      background:rgba(255,255,255,.05);backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,.08);border-radius:18px;
+      padding:28px 24px;flex:1;min-width:200px;max-width:240px;
+      opacity:0;transform:translateY(60px) scale(.9);
+      text-align:center;
+    }
+    .s2c-icon{font-size:2rem;margin-bottom:14px}
+    .s2c h3{font-family:'DM Serif Display',serif;font-size:1.05rem;color:white;margin-bottom:8px}
+    .s2c p{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.6}
 
-    /* CTA scene */
-    .scene-cta{padding:100px 52px;background:var(--cream);text-align:center}
-    .scene-cta h2{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);letter-spacing:-1px;color:var(--navy);margin-bottom:16px}
-    .scene-cta h2 em{font-style:italic;color:var(--gold)}
-    .scene-cta p{font-size:1rem;color:var(--muted);max-width:440px;margin:0 auto 36px;line-height:1.75;font-weight:300}
+    /* SCENE 3: Big stat counter */
+    #s3{flex-direction:column;gap:20px;text-align:center}
+    #s3 .s3-label{font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);opacity:0}
+    .s3-num{font-family:'Syne',sans-serif;font-size:clamp(6rem,18vw,15rem);font-weight:800;color:var(--gold2);line-height:1;opacity:0;transform:scale(.5)}
+    .s3-desc{font-size:.95rem;color:rgba(255,255,255,.45);opacity:0;transform:translateY(20px)}
+
+    /* SCENE 4: Feature list reveal */
+    #s4{flex-direction:row;gap:80px;align-items:center;max-width:1100px;width:100%}
+    .s4-left{flex:1}
+    .s4-left .s4-h{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);line-height:1.1;opacity:0;transform:translateX(-40px)}
+    .s4-left .s4-h em{font-style:italic;color:var(--gold2)}
+    .s4-right{flex:1;display:flex;flex-direction:column;gap:12px}
+    .feat{display:flex;align-items:center;gap:14px;padding:18px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:12px;opacity:0;transform:translateX(40px)}
+    .feat-icon{color:var(--gold2);font-size:1.1rem;flex-shrink:0}
+    .feat h4{font-size:.9rem;font-weight:600;color:white;margin-bottom:2px}
+    .feat p{font-size:.78rem;color:rgba(255,255,255,.4);line-height:1.4}
+
+    /* SCENE 5: Pricing reveal */
+    #s5{flex-direction:column;gap:36px;align-items:center;text-align:center}
+    #s5 .s5-h{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);opacity:0;transform:translateY(30px)}
+    #s5 .s5-h em{font-style:italic;color:var(--gold2)}
+    .s5-cards{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;width:100%;max-width:900px}
+    .s5c{
+      background:rgba(255,255,255,.05);backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,.08);border-radius:18px;
+      padding:32px 28px;flex:1;min-width:220px;max-width:260px;
+      opacity:0;transform:translateY(50px);
+    }
+    .s5c.hot{border-color:rgba(200,150,60,.4);background:rgba(200,150,60,.06)}
+    .s5c-tier{font-size:.65rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:12px}
+    .s5c-price{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:white;line-height:1;margin-bottom:4px}
+    .s5c-note{font-size:.75rem;color:rgba(255,255,255,.3);margin-bottom:20px}
+    .s5c-list{list-style:none;display:flex;flex-direction:column;gap:7px;text-align:left}
+    .s5c-list li{font-size:.8rem;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:7px}
+    .s5c-list li::before{content:'✓';color:var(--gold2);font-weight:700;font-size:.72rem;flex-shrink:0}
+
+    /* SCENE 6: CTA */
+    #s6{flex-direction:column;gap:20px;text-align:center}
+    #s6 .s6-h{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);letter-spacing:-2px;line-height:.95;opacity:0;transform:scale(.8)}
+    #s6 .s6-h em{font-style:italic;color:var(--gold2)}
+    #s6 .s6-p{font-size:1rem;color:rgba(255,255,255,.5);max-width:420px;margin:0 auto;line-height:1.75;font-weight:300;opacity:0;transform:translateY(20px)}
+    #s6 .s6-btn{display:inline-block;background:var(--gold);color:white;padding:16px 40px;border-radius:50px;font-weight:700;font-size:1rem;opacity:0;transform:translateY(20px);transition:background .25s,transform .25s;pointer-events:auto}
+    #s6 .s6-btn:hover{background:var(--gold2);transform:translateY(-2px)!important}
+
+    /* Progress dots */
+    .progress-dots{
+      position:fixed;right:28px;top:50%;transform:translateY(-50%);
+      display:flex;flex-direction:column;gap:10px;z-index:500;
+    }
+    .pdot{
+      width:8px;height:8px;border-radius:50%;
+      background:rgba(255,255,255,.2);transition:all .4s;cursor:pointer;
+    }
+    .pdot.active{background:var(--gold);transform:scale(1.4)}
+
+    /* After stage */
+    .after-stage{
+      position:relative;z-index:10;
+      margin-top:600vh; /* sits below the pin area */
+    }
+    .final-cta{padding:100px 52px;text-align:center;background:var(--cream)}
+    .final-cta h2{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);letter-spacing:-1px;color:var(--navy);margin-bottom:16px}
+    .final-cta h2 em{font-style:italic;color:var(--gold)}
+    .final-cta p{color:var(--muted);max-width:440px;margin:0 auto 36px;line-height:1.75;font-weight:300}
     .btn-navy{background:var(--navy);color:white;padding:14px 32px;border-radius:50px;font-weight:600;font-size:.92rem;transition:all .25s;display:inline-block}
-    .btn-navy:hover{background:var(--navy2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,31,58,.25)}
-
+    .btn-navy:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,31,58,.25)}
     footer{background:var(--navy);padding:36px 52px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid rgba(255,255,255,.07)}
     .f-logo{font-family:'DM Serif Display',serif;font-size:1rem;color:white}.f-logo em{font-style:italic;color:var(--gold2)}
     footer p{font-size:.8rem;color:rgba(255,255,255,.3)}footer a{font-size:.8rem;color:rgba(255,255,255,.3);transition:color .2s}footer a:hover{color:var(--gold2)}
 
     @media(max-width:768px){
       nav{padding:0 20px}.nav-links{display:none}.hamburger{display:flex}
-      .intro,.scene-text-inner,.scene-cards-inner,.scene-counter-inner,.scene-morph-inner,.scene-lines-inner,.scene-cta{padding-left:20px;padding-right:20px}
-      .counter-grid{grid-template-columns:1fr;gap:28px}
-      .cards-row{flex-direction:column}
-      .text-reveal-words{font-size:clamp(1.8rem,6vw,3rem)}
+      .progress-dots{display:none}
+      .scene{padding:80px 20px}
+      #s4{flex-direction:column;gap:32px}
+      .s2-cards,.s5-cards{flex-direction:column;align-items:center}
+      .s2c,.s5c{max-width:100%;width:100%}
+      .final-cta{padding:80px 20px}
       footer{padding:28px 20px;flex-direction:column;text-align:center}
     }
   </style>
@@ -131,105 +206,132 @@
   <a href="index.html">Home</a><a href="demo.html">Demo</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="contact.html">Get a Website</a>
 </div>
 
-<!-- INTRO -->
-<section class="intro">
-  <div class="intro-inner">
-    <div class="intro-tag"><div class="tag-l"></div><span class="tag-t">Animation Showcase</span></div>
-    <h1>This is what<br>your site<br>could <em>feel.</em></h1>
-    <p>Scroll down to experience the kinds of animations we build into every website. Each effect below can be applied to your business.</p>
-    <p class="intro-note">↓ Just scroll — no clicking required</p>
-  </div>
-  <div class="scroll-arrow"><span>scroll</span><div class="arrow-line"></div><div class="arrow-dot"></div></div>
-</section>
+<!-- Progress dots -->
+<div class="progress-dots" id="dots">
+  <div class="pdot active" onclick="goScene(0)"></div>
+  <div class="pdot" onclick="goScene(1)"></div>
+  <div class="pdot" onclick="goScene(2)"></div>
+  <div class="pdot" onclick="goScene(3)"></div>
+  <div class="pdot" onclick="goScene(4)"></div>
+  <div class="pdot" onclick="goScene(5)"></div>
+  <div class="pdot" onclick="goScene(6)"></div>
+</div>
 
-<!-- SCENE 1: Word reveal as you scroll -->
-<section class="scene-text pin-wrap">
-  <div class="scene-text-inner" id="scene1">
-    <span class="scene-text-label">01 — Text Reveal</span>
-    <div class="text-reveal-words" id="wordReveal">
-      <span class="word">Your</span>
-      <span class="word">business</span>
-      <span class="word">tells</span>
-      <span class="word">a</span>
-      <span class="word">story.</span>
+<!-- Scroll spacer — this creates the scroll distance -->
+<div class="stage-spacer"></div>
+
+<!-- THE STAGE — pinned to viewport -->
+<div class="stage" id="stage">
+  <div class="bg-layer"></div>
+  <div class="bg-orb" id="bgOrb"></div>
+  <div class="bg-orb2" id="bgOrb2"></div>
+  <div class="grid-bg" id="gridBg"></div>
+
+  <!-- S0: Intro -->
+  <div class="scene" id="s0">
+    <div class="s0-inner">
+      <div class="s0-tag"><span class="tag-l"></span><span class="tag-t">Animation Showcase</span></div>
+      <h1 class="s0-h">Scroll to see<br>what your site<br>could <em>feel.</em></h1>
+      <p class="s0-p">This entire page is one cinematic experience. Scroll down — the stage transforms around you.</p>
+      <div class="s0-hint"><span class="hint-t">scroll</span><div class="hint-line"></div><div class="hint-dot"></div></div>
+    </div>
+  </div>
+
+  <!-- S1: Word reveal -->
+  <div class="scene" id="s1">
+    <div class="s1-words">
+      <span class="w">Your</span>
+      <span class="w">business</span>
+      <span class="w hl">tells</span>
+      <span class="w hl">a</span>
+      <span class="w hl">story.</span>
       <br/>
-      <span class="word" style="color:var(--gold2)">We</span>
-      <span class="word" style="color:var(--gold2)">help</span>
-      <span class="word" style="color:var(--gold2)">people</span>
-      <span class="word" style="color:var(--gold2)">find</span>
-      <span class="word" style="color:var(--gold2)">it.</span>
+      <span class="w">We</span>
+      <span class="w">help</span>
+      <span class="w hl">people</span>
+      <span class="w hl">find</span>
+      <span class="w hl">it.</span>
     </div>
   </div>
-</section>
 
-<!-- SCENE 2: Cards cascade in -->
-<section class="scene-cards pin-wrap">
-  <div class="scene-cards-inner" id="scene2">
-    <div class="scene-cards-label">02 — Content Reveal</div>
-    <h2>Features that <em>appear</em><br>as you scroll</h2>
-    <div class="cards-row">
-      <div class="anim-card" id="card1"><div class="card-icon">🎨</div><h3>Custom Design</h3><p>Built for your specific business — never a template.</p></div>
-      <div class="anim-card" id="card2"><div class="card-icon">📱</div><h3>Mobile Perfect</h3><p>Flawless on every phone, tablet, and screen size.</p></div>
-      <div class="anim-card" id="card3"><div class="card-icon">⚡</div><h3>Fast & Smooth</h3><p>Optimized for speed. Animations that don't slow you down.</p></div>
-      <div class="anim-card" id="card4"><div class="card-icon">🔍</div><h3>SEO Built In</h3><p>Google finds you from day one.</p></div>
+  <!-- S2: Feature cards cascade -->
+  <div class="scene" id="s2">
+    <h2 class="s2-h">What goes into<br>every site we <em>build</em></h2>
+    <div class="s2-cards">
+      <div class="s2c"><div class="s2c-icon">🎨</div><h3>Custom Design</h3><p>Built for your business. Never a template.</p></div>
+      <div class="s2c"><div class="s2c-icon">📱</div><h3>Mobile Perfect</h3><p>Flawless on every device, every screen size.</p></div>
+      <div class="s2c"><div class="s2c-icon">⚡</div><h3>Fast & Smooth</h3><p>Animations that feel buttery, never janky.</p></div>
+      <div class="s2c"><div class="s2c-icon">🔍</div><h3>SEO Built In</h3><p>Google finds you from day one.</p></div>
     </div>
   </div>
-</section>
 
-<!-- SCENE 3: Counting numbers -->
-<section class="scene-counter pin-wrap">
-  <div class="scene-counter-inner" id="scene3">
-    <div class="counter-grid">
-      <div class="counter-item"><div class="count-num" id="c1">0</div><div class="count-suffix">days</div><div class="count-label">Average time to go live</div></div>
-      <div class="counter-item"><div class="count-num" id="c2">0</div><div class="count-suffix">%</div><div class="count-label">Mobile responsive</div></div>
-      <div class="counter-item"><div class="count-num" id="c3">$0</div><div class="count-suffix"></div><div class="count-label">Until you approve the design</div></div>
+  <!-- S3: Giant number -->
+  <div class="scene" id="s3">
+    <div class="s3-label">Average days to go live</div>
+    <div class="s3-num" id="bigNum">4</div>
+    <div class="s3-desc">From "yes" to a live website at your own domain.<br>Most agencies take 4–6 weeks.</div>
+  </div>
+
+  <!-- S4: Features list -->
+  <div class="scene" id="s4">
+    <div class="s4-left">
+      <h2 class="s4-h">Standard tier.<br>This is what<br><em>$799</em> gets you.</h2>
+    </div>
+    <div class="s4-right">
+      <div class="feat"><span class="feat-icon">✦</span><div><h4>6–10 pages</h4><p>Home, services, gallery, about, contact, FAQ — all of it.</p></div></div>
+      <div class="feat"><span class="feat-icon">✦</span><div><h4>Photo effects on hover</h4><p>Zoom, color reveal, wipe, blur-to-sharp — your photos come alive.</p></div></div>
+      <div class="feat"><span class="feat-icon">✦</span><div><h4>Booking button</h4><p>Calendly or Google Calendar embed — clients book directly.</p></div></div>
+      <div class="feat"><span class="feat-icon">✦</span><div><h4>Contact form</h4><p>Submissions go straight to your email. No backend needed.</p></div></div>
+      <div class="feat"><span class="feat-icon">✦</span><div><h4>Google Maps embed</h4><p>Your location right on the page — no API key required.</p></div></div>
     </div>
   </div>
-</section>
 
-<!-- SCENE 4: Morphing background -->
-<section class="scene-morph pin-wrap">
-  <div class="scene-morph-inner" id="scene4">
-    <div class="morph-shape ms1" id="ms1"></div>
-    <div class="morph-shape ms2" id="ms2"></div>
-    <div class="morph-shape ms3" id="ms3"></div>
-    <div class="morph-content">
-      <div style="font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:10px"><span style="width:28px;height:1px;background:var(--gold);display:block"></span>04 — Background Motion<span style="width:28px;height:1px;background:var(--gold);display:block"></span></div>
-      <h2>Depth that moves<br>with the <em>page</em></h2>
-      <p>Subtle background animations create depth and energy — making your site feel alive without being distracting.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 5: Line drawing -->
-<section class="scene-lines pin-wrap">
-  <div class="scene-lines-inner" id="scene5">
-    <div class="lines-content">
-      <h2>05 — Line Reveals</h2>
-      <p>Decorative elements draw themselves in as you scroll. Small details that make everything feel considered and intentional.</p>
-      <div class="lines-wrap">
-        <div class="line-anim l1" id="ll1"></div>
-        <div class="line-anim l2" id="ll2"></div>
-        <div class="line-anim l3" id="ll3"></div>
-        <div class="line-anim l4" id="ll4"></div>
-        <div class="line-anim l5" id="ll5"></div>
+  <!-- S5: Pricing -->
+  <div class="scene" id="s5">
+    <h2 class="s5-h">Simple pricing.<br>No <em>surprises.</em></h2>
+    <div class="s5-cards">
+      <div class="s5c">
+        <div class="s5c-tier">Basic</div>
+        <div class="s5c-price">$399</div>
+        <div class="s5c-note">build fee + from $49/mo</div>
+        <ul class="s5c-list"><li>1–5 pages</li><li>Animated hero</li><li>Scroll reveals</li><li>SEO built in</li><li>Mobile responsive</li></ul>
+      </div>
+      <div class="s5c hot">
+        <div class="s5c-tier">Standard — Most Popular</div>
+        <div class="s5c-price">$799</div>
+        <div class="s5c-note">build fee + from $49/mo</div>
+        <ul class="s5c-list"><li>6–10 pages</li><li>Photo effects</li><li>Contact form</li><li>Booking button</li><li>Gallery & FAQ</li></ul>
+      </div>
+      <div class="s5c">
+        <div class="s5c-tier">Premium</div>
+        <div class="s5c-price">$1,499</div>
+        <div class="s5c-note">build fee + from $49/mo</div>
+        <ul class="s5c-list"><li>Online booking</li><li>Stripe payments</li><li>Product catalog</li><li>Analytics setup</li><li>Live chat</li></ul>
       </div>
     </div>
   </div>
-</section>
 
-<!-- CTA -->
-<section class="scene-cta">
-  <h2>Want this for<br>your <em>business?</em></h2>
-  <p>Every animation you just saw can be built into your site — at the Standard or Premium tier.</p>
-  <a href="contact.html" class="btn-navy">Request Your Website →</a>
-</section>
+  <!-- S6: CTA -->
+  <div class="scene" id="s6">
+    <h2 class="s6-h">Ready to get<br><em>found?</em></h2>
+    <p class="s6-p">Your customers are searching for you right now. Let's make sure they find something beautiful.</p>
+    <a href="contact.html" class="s6-btn">Request Your Website →</a>
+  </div>
+</div>
 
-<footer>
-  <div class="f-logo">Get Found <em>Local</em></div>
-  <p>Serving local businesses across Colorado & the US</p>
-  <a href="mailto:Get-Found-Local@outlook.com">Get-Found-Local@outlook.com</a>
-</footer>
+<!-- After stage — normal scroll content -->
+<div class="after-stage">
+  <section class="final-cta">
+    <h2>Let's build<br>your site <em>together.</em></h2>
+    <p>Fill out the form and we'll reach out within 24 hours. No payment until you approve.</p>
+    <a href="contact.html" class="btn-navy">Get Started →</a>
+  </section>
+  <footer>
+    <div class="f-logo">Get Found <em>Local</em></div>
+    <p>Serving local businesses across Colorado & the US</p>
+    <a href="mailto:Get-Found-Local@outlook.com">Get-Found-Local@outlook.com</a>
+  </footer>
+</div>
 
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
@@ -239,95 +341,157 @@ var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 <!--End of Tawk.to Script-->
 
 <script>
-  gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
-  // ── SCENE 1: Word reveal scrubbed to scroll ──
-  const words = document.querySelectorAll('.word');
-  words.forEach((word, i) => {
-    gsap.to(word, {
-      opacity: 1, y: 0, color: word.style.color || '#1a1f3a',
-      scrollTrigger: {
-        trigger: '.scene-text',
-        start: `top+=${i * 60} center`,
-        end: `top+=${i * 60 + 80} center`,
-        scrub: 0.5
-      }
-    });
-  });
+const SCENES = 7;
+const SPACER_HEIGHT = window.innerHeight * 6; // 600vh
+let currentScene = 0;
 
-  // ── SCENE 2: Cards stagger in ──
-  ['card1','card2','card3','card4'].forEach((id, i) => {
-    gsap.to('#' + id, {
-      opacity: 1, y: 0, scale: 1,
-      scrollTrigger: {
-        trigger: '.scene-cards',
-        start: `top+=${i * 80} 70%`,
-        end: `top+=${i * 80 + 100} 40%`,
-        scrub: 0.6
-      }
-    });
-  });
+// ── Background colors per scene ──
+const bgColors = [
+  '#1a1f3a', // s0
+  '#0f1220', // s1 — darker
+  '#1a1f3a', // s2
+  '#252b4a', // s3 — slightly lighter navy
+  '#0a0e1a', // s4 — very dark
+  '#1a1f3a', // s5
+  '#0a0d18', // s6 — almost black
+];
+const orbOpacities = [0.18, 0.08, 0.15, 0.25, 0.1, 0.2, 0.12];
 
-  // ── SCENE 3: Counting numbers ──
-  function countUp(el, target, suffix, duration) {
-    let start = 0;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { start = target; clearInterval(timer); }
-      el.textContent = (suffix === '$0' ? '$' : '') + Math.floor(start) + (suffix !== '$0' ? suffix : '');
-    }, 16);
-  }
+// ── Scene definitions — what animates in/out ──
+const scenes = [
+  { el: document.getElementById('s0') },
+  { el: document.getElementById('s1') },
+  { el: document.getElementById('s2') },
+  { el: document.getElementById('s3') },
+  { el: document.getElementById('s4') },
+  { el: document.getElementById('s5') },
+  { el: document.getElementById('s6') },
+];
 
-  ScrollTrigger.create({
-    trigger: '.scene-counter',
-    start: 'top 60%',
-    once: true,
-    onEnter: () => {
-      countUp(document.getElementById('c1'), 4, '', 1200);
-      countUp(document.getElementById('c2'), 100, '', 1500);
-      document.getElementById('c3').textContent = '$0';
+// ── Show a scene ──
+function showScene(idx, fromAbove) {
+  const prev = currentScene;
+  currentScene = idx;
+
+  // Update dots
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i === idx));
+
+  // Update background
+  gsap.to('#stage .bg-layer', { backgroundColor: bgColors[idx], duration: 0.8, ease: 'power2.inOut' });
+  gsap.to('#bgOrb', { opacity: orbOpacities[idx], duration: 1 });
+
+  // Grid on s4
+  gsap.to('#gridBg', { opacity: idx === 4 ? 1 : 0, duration: 0.6 });
+
+  // Hide all scenes
+  scenes.forEach((s, i) => {
+    if (i !== idx) {
+      gsap.to(s.el, { opacity: 0, duration: 0.4, ease: 'power2.in' });
     }
   });
 
-  // ── SCENE 4: Morphing background shapes ──
-  gsap.to('#ms1', {
-    scale: 1.5, x: 60, y: -40,
-    scrollTrigger: { trigger: '.scene-morph', start: 'top bottom', end: 'bottom top', scrub: 1 }
-  });
-  gsap.to('#ms2', {
-    scale: 2, x: -80, y: 60,
-    scrollTrigger: { trigger: '.scene-morph', start: 'top bottom', end: 'bottom top', scrub: 1.5 }
-  });
-  gsap.to('#ms3', {
-    scale: 1.8, x: 100, y: -80,
-    scrollTrigger: { trigger: '.scene-morph', start: 'top bottom', end: 'bottom top', scrub: 2 }
-  });
-  gsap.to('.morph-content h2', {
-    y: -30,
-    scrollTrigger: { trigger: '.scene-morph', start: 'top bottom', end: 'bottom top', scrub: 0.8 }
-  });
+  // Show new scene
+  gsap.to(scenes[idx].el, { opacity: 1, duration: 0.6, delay: 0.2, ease: 'power2.out' });
 
-  // ── SCENE 5: Lines draw themselves ──
-  ['ll1','ll2','ll3','ll4','ll5'].forEach((id, i) => {
-    gsap.to('#' + id, {
-      scaleX: 1, transformOrigin: 'left center',
-      scrollTrigger: {
-        trigger: '.scene-lines',
-        start: `top+=${i * 60} 65%`,
-        end: `top+=${i * 60 + 80} 35%`,
-        scrub: 0.5
-      }
-    });
-  });
+  // Scene-specific animations
+  if (idx === 1) animS1();
+  if (idx === 2) animS2();
+  if (idx === 3) animS3();
+  if (idx === 4) animS4();
+  if (idx === 5) animS5();
+  if (idx === 6) animS6();
+}
 
-  // ── Page background color transitions ──
-  gsap.to('body', { backgroundColor: '#1a1f3a', scrollTrigger: { trigger: '.scene-text', start: 'top 80%', end: 'top 20%', scrub: true }});
-  gsap.to('body', { backgroundColor: '#ede9e0', scrollTrigger: { trigger: '.scene-cards', start: 'top 80%', end: 'top 20%', scrub: true }});
-  gsap.to('body', { backgroundColor: '#1a1f3a', scrollTrigger: { trigger: '.scene-counter', start: 'top 80%', end: 'top 20%', scrub: true }});
-  gsap.to('body', { backgroundColor: '#f5f2ec', scrollTrigger: { trigger: '.scene-morph', start: 'top 80%', end: 'top 20%', scrub: true }});
-  gsap.to('body', { backgroundColor: '#252b4a', scrollTrigger: { trigger: '.scene-lines', start: 'top 80%', end: 'top 20%', scrub: true }});
-  gsap.to('body', { backgroundColor: '#f5f2ec', scrollTrigger: { trigger: '.scene-cta', start: 'top 80%', end: 'top 20%', scrub: true }});
+// ── S1: Word reveal ──
+function animS1() {
+  const words = document.querySelectorAll('.w');
+  gsap.set(words, { opacity: 0, y: 30, scale: 0.9 });
+  gsap.to(words, {
+    opacity: 1, y: 0, scale: 1,
+    stagger: 0.08, duration: 0.5, ease: 'back.out(1.5)', delay: 0.3
+  });
+}
+
+// ── S2: Cards cascade ──
+function animS2() {
+  gsap.set('.s2-h', { opacity: 0, y: 40 });
+  gsap.set('.s2c', { opacity: 0, y: 60, scale: 0.9 });
+  gsap.to('.s2-h', { opacity: 1, y: 0, duration: 0.6, delay: 0.2 });
+  gsap.to('.s2c', { opacity: 1, y: 0, scale: 1, stagger: 0.1, duration: 0.5, ease: 'back.out(1.4)', delay: 0.5 });
+}
+
+// ── S3: Number count ──
+function animS3() {
+  gsap.set('.s3-label', { opacity: 0 });
+  gsap.set('.s3-num', { opacity: 0, scale: 0.4 });
+  gsap.set('.s3-desc', { opacity: 0, y: 20 });
+  gsap.to('.s3-label', { opacity: 1, duration: 0.5, delay: 0.2 });
+  gsap.to('.s3-num', { opacity: 1, scale: 1, duration: 0.8, delay: 0.4, ease: 'elastic.out(1.2, 0.6)' });
+  gsap.to('.s3-desc', { opacity: 1, y: 0, duration: 0.6, delay: 0.9 });
+}
+
+// ── S4: Features list ──
+function animS4() {
+  gsap.set('.s4-h', { opacity: 0, x: -40 });
+  gsap.set('.feat', { opacity: 0, x: 40 });
+  gsap.to('.s4-h', { opacity: 1, x: 0, duration: 0.6, delay: 0.2 });
+  gsap.to('.feat', { opacity: 1, x: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out', delay: 0.4 });
+}
+
+// ── S5: Pricing cards ──
+function animS5() {
+  gsap.set('.s5-h', { opacity: 0, y: 30 });
+  gsap.set('.s5c', { opacity: 0, y: 50 });
+  gsap.to('.s5-h', { opacity: 1, y: 0, duration: 0.6, delay: 0.2 });
+  gsap.to('.s5c', { opacity: 1, y: 0, stagger: 0.12, duration: 0.6, ease: 'back.out(1.3)', delay: 0.5 });
+}
+
+// ── S6: CTA ──
+function animS6() {
+  gsap.set('.s6-h', { opacity: 0, scale: 0.8 });
+  gsap.set('.s6-p', { opacity: 0, y: 20 });
+  gsap.set('.s6-btn', { opacity: 0, y: 20 });
+  gsap.to('.s6-h', { opacity: 1, scale: 1, duration: 0.8, delay: 0.2, ease: 'back.out(1.2)' });
+  gsap.to('.s6-p', { opacity: 1, y: 0, duration: 0.6, delay: 0.7 });
+  gsap.to('.s6-btn', { opacity: 1, y: 0, duration: 0.6, delay: 0.95 });
+}
+
+// ── Orb parallax on mouse ──
+document.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 40;
+  const y = (e.clientY / window.innerHeight - 0.5) * 40;
+  gsap.to('#bgOrb', { x, y, duration: 1.5, ease: 'power1.out' });
+  gsap.to('#bgOrb2', { x: -x * 0.6, y: -y * 0.6, duration: 2, ease: 'power1.out' });
+});
+
+// ── ScrollTrigger: map scroll position to scene ──
+const sceneHeight = SPACER_HEIGHT / SCENES;
+
+ScrollTrigger.create({
+  trigger: '.stage-spacer',
+  start: 'top top',
+  end: 'bottom bottom',
+  scrub: false,
+  onUpdate: self => {
+    const newScene = Math.min(SCENES - 1, Math.floor(self.progress * SCENES));
+    if (newScene !== currentScene) {
+      showScene(newScene);
+    }
+  }
+});
+
+// ── Navigate to scene by clicking dot ──
+function goScene(idx) {
+  const progress = idx / SCENES;
+  const scrollTarget = progress * SPACER_HEIGHT;
+  window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+}
+
+// ── Init ──
+gsap.set('#s0', { opacity: 1 });
+scenes.slice(1).forEach(s => gsap.set(s.el, { opacity: 0 }));
 </script>
 </body>
 </html>

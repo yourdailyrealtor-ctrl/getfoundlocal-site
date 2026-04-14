@@ -134,7 +134,61 @@
 </section>
 
 <footer><div class="f-logo">Get Found <em>Local</em></div><p>Serving local businesses across Colorado & the US</p><a href="mailto:Get-Found-Local@outlook.com">Get-Found-Local@outlook.com</a></footer>
-<script>const io=new IntersectionObserver(e=>{e.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('on'),i*80);io.unobserve(e.target)}})},{threshold:.1});document.querySelectorAll('[data-r]').forEach(e=>io.observe(e));</script>
+<script>
+
+  // Form submit — notify + thank you message
+  document.querySelector('form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    const formData = new FormData(this);
+
+    // Send to Formspree
+    try {
+      const res = await fetch('https://formspree.io/f/xpwzgkqy', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        // Show thank you
+        this.innerHTML = `
+          <div style="text-align:center;padding:40px 0">
+            <div style="font-size:2.5rem;margin-bottom:16px">✅</div>
+            <h3 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--navy);margin-bottom:12px">Request received!</h3>
+            <p style="color:var(--muted);line-height:1.75">We'll reach out within 24 hours to discuss your site.<br>Keep an eye on your inbox!</p>
+          </div>
+        `;
+
+        // Also send notification email via our backend
+        fetch('https://formspree.io/f/xpwzgkqy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: '🔔 New website request from Get Found Local',
+            notification: 'Someone submitted the request form!',
+            business: formData.get('business_name'),
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            tier: formData.get('tier'),
+            location: formData.get('location')
+          })
+        }).catch(() => {});
+      } else {
+        btn.textContent = 'Try again';
+        btn.disabled = false;
+      }
+    } catch(err) {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
+    }
+  });
+
+  const io=new IntersectionObserver(e=>{e.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('on'),i*80);io.unobserve(e.target)}})},{threshold:.1});document.querySelectorAll('[data-r]').forEach(e=>io.observe(e));</script>
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

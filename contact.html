@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request a Website — Get Found Local</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#0a0a0a;--ink2:#141414;--lime:#b8ff57;--lime2:#96d93e;--white:#fff;--muted:rgba(255,255,255,.45);--border:rgba(255,255,255,.08);--r:16px}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--white);overflow-x:hidden}a{text-decoration:none;color:inherit}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(10,10,10,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .logo{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800}.logo span{color:var(--lime)}
+    .nav-links{display:flex;align-items:center;gap:4px}.nav-links a{padding:8px 14px;font-size:.85rem;color:var(--muted);border-radius:8px;transition:color .2s,background .2s}.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(255,255,255,.06)}
+    .nav-cta{background:var(--lime)!important;color:var(--ink)!important;font-weight:700!important;border-radius:50px!important;padding:8px 20px!important}.nav-cta:hover{background:var(--lime2)!important}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}.hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px}
+    .mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,10,10,.97);border-bottom:1px solid var(--border);padding:16px 24px;flex-direction:column;gap:4px;z-index:99}.mobile-menu.open{display:flex}.mobile-menu a{padding:12px 16px;font-size:.95rem;color:var(--muted);border-radius:8px}
+    .page-header{padding:120px 48px 60px;border-bottom:1px solid var(--border)}
+    .label{font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--lime);margin-bottom:14px;display:block}
+    h1{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:800;letter-spacing:-2px;line-height:.95;margin-bottom:20px}h1 em{font-style:normal;color:var(--lime)}
+    .sub{font-size:.98rem;color:var(--muted);line-height:1.75;max-width:500px;font-weight:300}
+    .form-section{padding:70px 48px}
+    .form-wrap{max-width:780px;background:var(--ink2);border-radius:var(--r);padding:48px 44px;border:1px solid var(--border)}
+    .f-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+    .f-full{margin-bottom:18px}
+    .f-g label{display:block;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+    .f-g input,.f-g select,.f-g textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:13px 15px;color:var(--white);font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .25s,background .25s;-webkit-appearance:none}
+    .f-g select{cursor:pointer}.f-g select option{background:#1e1e1e}
+    .f-g input:focus,.f-g select:focus,.f-g textarea:focus{border-color:rgba(184,255,87,.45);background:rgba(184,255,87,.04)}
+    .f-g input::placeholder,.f-g textarea::placeholder{color:rgba(255,255,255,.18)}
+    .f-g textarea{resize:vertical;min-height:88px}
+    .f-div{height:1px;background:var(--border);margin:28px 0}
+    .f-stitle{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:var(--white);margin-bottom:16px}
+    .checks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+    .chk{position:relative}.chk input{position:absolute;opacity:0;pointer-events:none}
+    .chk label{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:.8rem;color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;user-select:none}
+    .chk input:checked+label{background:rgba(184,255,87,.1);border-color:rgba(184,255,87,.4);color:var(--lime)}
+    .chk label:hover{border-color:rgba(255,255,255,.2);color:var(--white)}
+    .radios{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+    .rdo{position:relative}.rdo input{position:absolute;opacity:0;pointer-events:none}
+    .rdo label{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;padding:7px 14px;font-size:.8rem;color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;user-select:none}
+    .rdo input:checked+label{background:rgba(184,255,87,.1);border-color:rgba(184,255,87,.4);color:var(--lime)}
+    .rdo label:hover{border-color:rgba(255,255,255,.2);color:var(--white)}
+    .submit{width:100%;background:var(--lime);color:var(--ink);border:none;padding:15px;border-radius:50px;font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .25s;margin-top:8px}
+    .submit:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 6px 24px rgba(184,255,87,.3)}
+    .form-note{text-align:center;margin-top:14px;font-size:.78rem;color:rgba(255,255,255,.25)}
+    [data-r]{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}[data-r].on{opacity:1;transform:none}
+    footer{background:var(--ink2);border-top:1px solid var(--border);padding:36px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    .f-logo{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800}.f-logo span{color:var(--lime)}
+    footer p{font-size:.8rem;color:rgba(255,255,255,.3)}footer a{font-size:.8rem;color:rgba(255,255,255,.3);transition:color .2s}footer a:hover{color:var(--lime)}
+    @media(max-width:768px){nav{padding:0 20px}.nav-links{display:none}.hamburger{display:flex}.page-header,.form-section{padding-left:20px;padding-right:20px}.form-wrap{padding:32px 24px}.f-row{grid-template-columns:1fr}.checks{grid-template-columns:repeat(2,1fr)}footer{padding:28px 20px;flex-direction:column;text-align:center}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Get<span>Found</span>Local</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="work.html">Our Work</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a>
+    <a href="contact.html" class="active nav-cta">Get a Website</a>
+  </div>
+  <div class="hamburger" onclick="document.getElementById('mob').classList.toggle('open')"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html">Home</a><a href="work.html">Our Work</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="contact.html">Get a Website</a>
+</div>
+
+<div class="page-header">
+  <span class="label">Get Started</span>
+  <h1>Let's build<br>your <em>site.</em></h1>
+  <p class="sub">Fill this out and we'll reach out within 24 hours to discuss your site. You won't pay anything until you've seen the design and approved it.</p>
+</div>
+
+<section class="form-section">
+  <div class="form-wrap" data-r>
+    <form action="https://formspree.io/f/xpwzgkqy" method="POST">
+      <div class="f-stitle">Your Info</div>
+      <div class="f-row">
+        <div class="f-g"><label>Business Name *</label><input type="text" name="business_name" placeholder="Joe's Barbershop" required/></div>
+        <div class="f-g"><label>Your Name *</label><input type="text" name="name" placeholder="Joe Smith" required/></div>
+      </div>
+      <div class="f-row">
+        <div class="f-g"><label>Email *</label><input type="email" name="email" placeholder="joe@email.com" required/></div>
+        <div class="f-g"><label>Phone</label><input type="tel" name="phone" placeholder="(303) 555-0100"/></div>
+      </div>
+      <div class="f-full f-g"><label>Business Address *</label><input type="text" name="location" placeholder="123 Main St, Denver, CO 80201" required/></div>
+
+      <div class="f-div"></div>
+      <div class="f-stitle">Tier</div>
+      <div class="f-full f-g">
+        <label>Which package? *</label>
+        <select name="tier" required>
+          <option value="" disabled selected>Select one...</option>
+          <option>Basic — $399 (1–5 pages)</option>
+          <option>Standard — $799 (6–10 pages + animations)</option>
+          <option>Premium — $1,499 (booking, payments, ecommerce)</option>
+          <option>Not sure — help me decide</option>
+        </select>
+      </div>
+
+      <div class="f-div"></div>
+      <div class="f-stitle">Pages You Want</div>
+      <div class="checks">
+        <div class="chk"><input type="checkbox" id="c1" name="pages" value="Home" checked><label for="c1">🏠 Home</label></div>
+        <div class="chk"><input type="checkbox" id="c2" name="pages" value="About"><label for="c2">👤 About</label></div>
+        <div class="chk"><input type="checkbox" id="c3" name="pages" value="Services"><label for="c3">🔧 Services</label></div>
+        <div class="chk"><input type="checkbox" id="c4" name="pages" value="Gallery"><label for="c4">📸 Gallery</label></div>
+        <div class="chk"><input type="checkbox" id="c5" name="pages" value="Reviews"><label for="c5">⭐ Reviews</label></div>
+        <div class="chk"><input type="checkbox" id="c6" name="pages" value="Contact"><label for="c6">📞 Contact</label></div>
+        <div class="chk"><input type="checkbox" id="c7" name="pages" value="Menu"><label for="c7">🍽️ Menu</label></div>
+        <div class="chk"><input type="checkbox" id="c8" name="pages" value="Booking"><label for="c8">📅 Booking</label></div>
+        <div class="chk"><input type="checkbox" id="c9" name="pages" value="FAQ"><label for="c9">❓ FAQ</label></div>
+      </div>
+
+      <div class="f-div"></div>
+      <div class="f-stitle">Design Preferences</div>
+      <div class="f-full">
+        <div class="radios">
+          <div class="rdo"><input type="radio" id="r0" name="colors" value="best_judgment" checked><label for="r0">✨ Use your best judgment</label></div>
+          <div class="rdo"><input type="radio" id="r1" name="colors" value="dark"><label for="r1">🌑 Dark & Moody</label></div>
+          <div class="rdo"><input type="radio" id="r2" name="colors" value="light"><label for="r2">☀️ Light & Clean</label></div>
+          <div class="rdo"><input type="radio" id="r3" name="colors" value="warm"><label for="r3">🟤 Warm & Earthy</label></div>
+          <div class="rdo"><input type="radio" id="r4" name="colors" value="bold"><label for="r4">🔴 Bold Colors</label></div>
+        </div>
+      </div>
+      <div class="f-full f-g">
+        <label>Photos</label>
+        <select name="photos">
+          <option>Pull from my Google Maps listing</option>
+          <option>I'll send my own photos</option>
+          <option>Mix of both</option>
+          <option>Use stock photos</option>
+        </select>
+      </div>
+      <div class="f-full f-g">
+        <label>Anything else?</label>
+        <textarea name="notes" placeholder="Special requests, features you need, or just 'use your best judgment'..."></textarea>
+      </div>
+
+      <button type="submit" class="submit">Send My Request →</button>
+      <p class="form-note">We'll reach out within 24 hours. No payment until you approve the design.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">Get<span>Found</span>Local</div>
+  <p>Serving local businesses across Colorado & the US</p>
+  <a href="mailto:Get-Found-Local@outlook.com">Get-Found-Local@outlook.com</a>
+</footer>
+<script>
+  const io=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('on'),i*80);io.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

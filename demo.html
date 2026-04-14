@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animation Demo — Get Found Local</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    :root{--cream:#f5f2ec;--cream2:#ede9e0;--navy:#1a1f3a;--navy2:#252b4a;--gold:#c8963c;--gold2:#e8b96a;--white:#fff;--muted:#6b7280;--border:rgba(26,31,58,.1)}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:auto}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:rgba(245,242,236,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .logo{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--navy)}.logo em{font-style:italic;color:var(--gold)}
+    .nav-links{display:flex;align-items:center;gap:4px}.nav-links a{padding:7px 14px;font-size:.85rem;font-weight:500;color:var(--muted);border-radius:8px;transition:color .2s,background .2s}.nav-links a:hover,.nav-links a.active{color:var(--navy);background:rgba(26,31,58,.06)}
+    .nav-cta{background:var(--navy)!important;color:white!important;border-radius:50px!important;padding:8px 22px!important;font-weight:600!important}.nav-cta:hover{background:var(--navy2)!important}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}.hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px}
+    .mob{display:none;position:fixed;top:66px;left:0;right:0;background:rgba(245,242,236,.97);border-bottom:1px solid var(--border);padding:14px 24px;flex-direction:column;gap:2px;z-index:999}.mob.open{display:flex}.mob a{padding:11px 14px;font-size:.92rem;color:var(--muted);border-radius:8px;font-weight:500}.mob a:hover{color:var(--navy);background:rgba(26,31,58,.04)}
+
+    /* ── INTRO ── */
+    .intro{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 48px;background:var(--cream);position:relative;overflow:hidden}
+    .intro::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.4}
+    .intro-inner{position:relative;z-index:1}
+    .intro-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:28px}
+    .tag-l{width:28px;height:1px;background:var(--gold)}.tag-t{font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+    .intro h1{font-family:'DM Serif Display',serif;font-size:clamp(3rem,7vw,6rem);letter-spacing:-2px;line-height:.95;color:var(--navy);margin-bottom:20px}
+    .intro h1 em{font-style:italic;color:var(--gold)}
+    .intro p{font-size:1.05rem;color:var(--muted);max-width:480px;margin:0 auto 16px;line-height:1.8;font-weight:300}
+    .intro-note{font-size:.8rem;color:rgba(26,31,58,.35);letter-spacing:.5px}
+    .scroll-arrow{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;animation:bob 2s ease infinite}
+    .scroll-arrow span{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+    .arrow-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--gold),transparent)}
+    .arrow-dot{width:6px;height:6px;background:var(--gold);border-radius:50%}
+    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+    /* ── PINNED SCENES ── */
+    /* Each scene is pinned with ScrollTrigger so it stays on screen while animating */
+    .pin-wrap{position:relative}
+
+    /* Scene: Text reveal on scroll */
+    .scene-text{height:200vh;background:var(--navy);position:relative}
+    .scene-text-inner{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 52px;overflow:hidden}
+    .text-reveal-words{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:800;color:white;line-height:1.05;letter-spacing:-2px;text-align:center;max-width:900px}
+    .word{display:inline-block;opacity:.12;transform:translateY(20px);margin:0 8px;transition:none}
+    .scene-text-label{position:absolute;top:80px;left:52px;font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+
+    /* Scene: Cards cascade */
+    .scene-cards{height:250vh;background:var(--cream2);position:relative}
+    .scene-cards-inner{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 52px;overflow:hidden}
+    .scene-cards-label{font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .scene-cards-label::before{content:'';width:28px;height:1px;background:var(--gold)}
+    .scene-cards h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);color:var(--navy);letter-spacing:-1px;margin-bottom:48px}
+    .scene-cards h2 em{font-style:italic;color:var(--gold)}
+    .cards-row{display:flex;gap:16px;flex-wrap:wrap}
+    .anim-card{background:white;border-radius:16px;padding:28px;border:1px solid var(--border);flex:1;min-width:220px;opacity:0;transform:translateY(60px) scale(.95)}
+    .anim-card .card-icon{font-size:1.8rem;margin-bottom:14px}
+    .anim-card h3{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:8px}
+    .anim-card p{font-size:.83rem;color:var(--muted);line-height:1.6}
+
+    /* Scene: Counter numbers */
+    .scene-counter{height:200vh;background:var(--navy);position:relative}
+    .scene-counter-inner{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 52px}
+    .counter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:900px;width:100%;text-align:center}
+    .counter-item .count-num{font-family:'Syne',sans-serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:800;color:var(--gold2);line-height:1}
+    .counter-item .count-label{font-size:.82rem;color:rgba(255,255,255,.45);margin-top:8px;letter-spacing:1.5px;text-transform:uppercase}
+    .counter-item .count-suffix{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(2rem,4vw,3.5rem);color:var(--gold2)}
+
+    /* Scene: Morphing shapes */
+    .scene-morph{height:300vh;background:var(--cream);position:relative}
+    .scene-morph-inner{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .morph-content{text-align:center;position:relative;z-index:1;padding:0 48px}
+    .morph-content h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);color:var(--navy);letter-spacing:-1px;margin-bottom:16px}
+    .morph-content h2 em{font-style:italic;color:var(--gold)}
+    .morph-content p{font-size:1rem;color:var(--muted);max-width:460px;margin:0 auto;line-height:1.75;font-weight:300}
+    /* Animated background shapes */
+    .morph-shape{position:absolute;border-radius:50%;pointer-events:none}
+    .ms1{width:400px;height:400px;background:radial-gradient(circle,rgba(200,150,60,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
+    .ms2{width:200px;height:200px;background:radial-gradient(circle,rgba(26,31,58,.08) 0%,transparent 70%);top:20%;right:15%}
+    .ms3{width:150px;height:150px;background:radial-gradient(circle,rgba(200,150,60,.1) 0%,transparent 70%);bottom:20%;left:15%}
+
+    /* Scene: Line drawing */
+    .scene-lines{height:200vh;background:var(--navy2);position:relative}
+    .scene-lines-inner{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 52px;overflow:hidden}
+    .lines-content{text-align:center;position:relative;z-index:1;max-width:700px}
+    .lines-content h2{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:800;color:white;letter-spacing:-1px;margin-bottom:16px}
+    .lines-content p{font-size:1rem;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:36px;font-weight:300}
+    /* Animated horizontal lines */
+    .line-anim{height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:12px 0;transform:scaleX(0);transform-origin:left}
+    .l1{width:80%} .l2{width:60%} .l3{width:90%} .l4{width:50%} .l5{width:70%}
+    .lines-wrap{overflow:hidden;max-width:600px;margin:0 auto}
+
+    /* CTA scene */
+    .scene-cta{padding:100px 52px;background:var(--cream);text-align:center}
+    .scene-cta h2{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);letter-spacing:-1px;color:var(--navy);margin-bottom:16px}
+    .scene-cta h2 em{font-style:italic;color:var(--gold)}
+    .scene-cta p{font-size:1rem;color:var(--muted);max-width:440px;margin:0 auto 36px;line-height:1.75;font-weight:300}
+    .btn-navy{background:var(--navy);color:white;padding:14px 32px;border-radius:50px;font-weight:600;font-size:.92rem;transition:all .25s;display:inline-block}
+    .btn-navy:hover{background:var(--navy2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,31,58,.25)}
+
+    footer{background:var(--navy);padding:36px 52px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid rgba(255,255,255,.07)}
+    .f-logo{font-family:'DM Serif Display',serif;font-size:1rem;color:white}.f-logo em{font-style:italic;color:var(--gold2)}
+    footer p{font-size:.8rem;color:rgba(255,255,255,.3)}footer a{font-size:.8rem;color:rgba(255,255,255,.3);transition:color .2s}footer a:hover{color:var(--gold2)}
+
+    @media(max-width:768px){
+      nav{padding:0 20px}.nav-links{display:none}.hamburger{display:flex}
+      .intro,.scene-text-inner,.scene-cards-inner,.scene-counter-inner,.scene-morph-inner,.scene-lines-inner,.scene-cta{padding-left:20px;padding-right:20px}
+      .counter-grid{grid-template-columns:1fr;gap:28px}
+      .cards-row{flex-direction:column}
+      .text-reveal-words{font-size:clamp(1.8rem,6vw,3rem)}
+      footer{padding:28px 20px;flex-direction:column;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Get Found <em>Local</em></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="demo.html" class="active">Demo</a>
+    <a href="services.html">Services</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="contact.html" class="nav-cta">Get a Website</a>
+  </div>
+  <div class="hamburger" onclick="document.getElementById('mob').classList.toggle('open')"><span></span><span></span><span></span></div>
+</nav>
+<div class="mob" id="mob">
+  <a href="index.html">Home</a><a href="demo.html">Demo</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="contact.html">Get a Website</a>
+</div>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="intro-inner">
+    <div class="intro-tag"><div class="tag-l"></div><span class="tag-t">Animation Showcase</span></div>
+    <h1>This is what<br>your site<br>could <em>feel.</em></h1>
+    <p>Scroll down to experience the kinds of animations we build into every website. Each effect below can be applied to your business.</p>
+    <p class="intro-note">↓ Just scroll — no clicking required</p>
+  </div>
+  <div class="scroll-arrow"><span>scroll</span><div class="arrow-line"></div><div class="arrow-dot"></div></div>
+</section>
+
+<!-- SCENE 1: Word reveal as you scroll -->
+<section class="scene-text pin-wrap">
+  <div class="scene-text-inner" id="scene1">
+    <span class="scene-text-label">01 — Text Reveal</span>
+    <div class="text-reveal-words" id="wordReveal">
+      <span class="word">Your</span>
+      <span class="word">business</span>
+      <span class="word">tells</span>
+      <span class="word">a</span>
+      <span class="word">story.</span>
+      <br/>
+      <span class="word" style="color:var(--gold2)">We</span>
+      <span class="word" style="color:var(--gold2)">help</span>
+      <span class="word" style="color:var(--gold2)">people</span>
+      <span class="word" style="color:var(--gold2)">find</span>
+      <span class="word" style="color:var(--gold2)">it.</span>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 2: Cards cascade in -->
+<section class="scene-cards pin-wrap">
+  <div class="scene-cards-inner" id="scene2">
+    <div class="scene-cards-label">02 — Content Reveal</div>
+    <h2>Features that <em>appear</em><br>as you scroll</h2>
+    <div class="cards-row">
+      <div class="anim-card" id="card1"><div class="card-icon">🎨</div><h3>Custom Design</h3><p>Built for your specific business — never a template.</p></div>
+      <div class="anim-card" id="card2"><div class="card-icon">📱</div><h3>Mobile Perfect</h3><p>Flawless on every phone, tablet, and screen size.</p></div>
+      <div class="anim-card" id="card3"><div class="card-icon">⚡</div><h3>Fast & Smooth</h3><p>Optimized for speed. Animations that don't slow you down.</p></div>
+      <div class="anim-card" id="card4"><div class="card-icon">🔍</div><h3>SEO Built In</h3><p>Google finds you from day one.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 3: Counting numbers -->
+<section class="scene-counter pin-wrap">
+  <div class="scene-counter-inner" id="scene3">
+    <div class="counter-grid">
+      <div class="counter-item"><div class="count-num" id="c1">0</div><div class="count-suffix">days</div><div class="count-label">Average time to go live</div></div>
+      <div class="counter-item"><div class="count-num" id="c2">0</div><div class="count-suffix">%</div><div class="count-label">Mobile responsive</div></div>
+      <div class="counter-item"><div class="count-num" id="c3">$0</div><div class="count-suffix"></div><div class="count-label">Until you approve the design</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 4: Morphing background -->
+<section class="scene-morph pin-wrap">
+  <div class="scene-morph-inner" id="scene4">
+    <div class="morph-shape ms1" id="ms1"></div>
+    <div class="morph-shape ms2" id="ms2"></div>
+    <div class="morph-shape ms3" id="ms3"></div>
+    <div class="morph-content">
+      <div style="font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:10px"><span style="width:28px;height:1px;background:var(--gold);display:block"></span>04 — Background Motion<span style="width:28px;height:1px;background:var(--gold);display:block"></span></div>
+      <h2>Depth that moves<br>with the <em>page</em></h2>
+      <p>Subtle background animations create depth and energy — making your site feel alive without being distracting.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 5: Line drawing -->
+<section class="scene-lines pin-wrap">
+  <div class="scene-lines-inner" id="scene5">
+    <div class="lines-content">
+      <h2>05 — Line Reveals</h2>
+      <p>Decorative elements draw themselves in as you scroll. Small details that make everything feel considered and intentional.</p>
+      <div class="lines-wrap">
+        <div class="line-anim l1" id="ll1"></div>
+        <div class="line-anim l2" id="ll2"></div>
+        <div class="line-anim l3" id="ll3"></div>
+        <div class="line-anim l4" id="ll4"></div>
+        <div class="line-anim l5" id="ll5"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="scene-cta">
+  <h2>Want this for<br>your <em>business?</em></h2>
+  <p>Every animation you just saw can be built into your site — at the Standard or Premium tier.</p>
+  <a href="contact.html" class="btn-navy">Request Your Website →</a>
+</section>
+
+<footer>
+  <div class="f-logo">Get Found <em>Local</em></div>
+  <p>Serving local businesses across Colorado & the US</p>
+  <a href="mailto:Get-Found-Local@outlook.com">Get-Found-Local@outlook.com</a>
+</footer>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src='https://embed.tawk.to/69dd997b9ef2731c3237ae64/1jm4pv30t';s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();
+</script>
+<!--End of Tawk.to Script-->
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── SCENE 1: Word reveal scrubbed to scroll ──
+  const words = document.querySelectorAll('.word');
+  words.forEach((word, i) => {
+    gsap.to(word, {
+      opacity: 1, y: 0, color: word.style.color || '#1a1f3a',
+      scrollTrigger: {
+        trigger: '.scene-text',
+        start: `top+=${i * 60} center`,
+        end: `top+=${i * 60 + 80} center`,
+        scrub: 0.5
+      }
+    });
+  });
+
+  // ── SCENE 2: Cards stagger in ──
+  ['card1','card2','card3','card4'].forEach((id, i) => {
+    gsap.to('#' + id, {
+      opacity: 1, y: 0, scale: 1,
+      scrollTrigger: {
+        trigger: '.scene-cards',
+        start: `top+=${i * 80} 70%`,
+        end: `top+=${i * 80 + 100} 40%`,
+        scrub: 0.6
+      }
+    });
+  });
+
+  // ── SCENE 3: Counting numbers ──
+  function countUp(el, target, suffix, duration) {
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { start = target; clearInterval(timer); }
+      el.textContent = (suffix === '$0' ? '$' : '') + Math.floor(start) + (suffix !== '$0' ? suffix : '');
+    }, 16);
+  }
+
+  ScrollTrigger.create({
+    trigger: '.scene-counter',
+    start: 'top 60%',
+    once: true,
+    onEnter: () => {
+      countUp(document.getElementById('c1'), 4, '', 1200);
+      countUp(document.getElementById('c2'), 100, '', 1500);
+      document.getElementById('c3').textContent = '$0';
+    }
+  });
+
+  // ── SCENE 4: Morphing background shapes ──
+  gsap.to('#ms1', {
+    scale: 1.5, x: 60, y: -40,
+    scrollTrigger: { trigger: '.scene-morph', start: 'top bottom', end: 'bottom top', scrub: 1 }
+  });
+  gsap.to('#ms2', {
+    scale: 2, x: -80, y: 60,
+    scrollTrigger: { trigger: '.scene-morph', start: 'top bottom', end: 'bottom top', scrub: 1.5 }
+  });
+  gsap.to('#ms3', {
+    scale: 1.8, x: 100, y: -80,
+    scrollTrigger: { trigger: '.scene-morph', start: 'top bottom', end: 'bottom top', scrub: 2 }
+  });
+  gsap.to('.morph-content h2', {
+    y: -30,
+    scrollTrigger: { trigger: '.scene-morph', start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+  });
+
+  // ── SCENE 5: Lines draw themselves ──
+  ['ll1','ll2','ll3','ll4','ll5'].forEach((id, i) => {
+    gsap.to('#' + id, {
+      scaleX: 1, transformOrigin: 'left center',
+      scrollTrigger: {
+        trigger: '.scene-lines',
+        start: `top+=${i * 60} 65%`,
+        end: `top+=${i * 60 + 80} 35%`,
+        scrub: 0.5
+      }
+    });
+  });
+
+  // ── Page background color transitions ──
+  gsap.to('body', { backgroundColor: '#1a1f3a', scrollTrigger: { trigger: '.scene-text', start: 'top 80%', end: 'top 20%', scrub: true }});
+  gsap.to('body', { backgroundColor: '#ede9e0', scrollTrigger: { trigger: '.scene-cards', start: 'top 80%', end: 'top 20%', scrub: true }});
+  gsap.to('body', { backgroundColor: '#1a1f3a', scrollTrigger: { trigger: '.scene-counter', start: 'top 80%', end: 'top 20%', scrub: true }});
+  gsap.to('body', { backgroundColor: '#f5f2ec', scrollTrigger: { trigger: '.scene-morph', start: 'top 80%', end: 'top 20%', scrub: true }});
+  gsap.to('body', { backgroundColor: '#252b4a', scrollTrigger: { trigger: '.scene-lines', start: 'top 80%', end: 'top 20%', scrub: true }});
+  gsap.to('body', { backgroundColor: '#f5f2ec', scrollTrigger: { trigger: '.scene-cta', start: 'top 80%', end: 'top 20%', scrub: true }});
+</script>
+</body>
+</html>

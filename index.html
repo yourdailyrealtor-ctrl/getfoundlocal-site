@@ -3,108 +3,171 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Get Found Local — Websites for Local Businesses</title>
-  <meta name="description" content="We build beautiful, affordable websites for local businesses. Starting at $399. Fully managed. Live in 3–4 days."/>
+  <title>Get Found Local — Web Design for Local Businesses</title>
+  <meta name="description" content="Beautiful, affordable websites for local businesses. Starting at $399. Fully managed. Live in days."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root { --ink:#0a0a0a; --ink2:#141414; --lime:#b8ff57; --lime2:#96d93e; --white:#fff; --muted:rgba(255,255,255,.45); --border:rgba(255,255,255,.08); --r:16px; }
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--white);overflow-x:hidden}
-    a{text-decoration:none;color:inherit}
+    :root {
+      --cream: #f5f2ec;
+      --cream2: #ede9e0;
+      --navy: #1a1f3a;
+      --navy2: #252b4a;
+      --gold: #c8963c;
+      --gold-light: #e8b96a;
+      --text: #1a1f3a;
+      --muted: #6b7280;
+      --border: rgba(26,31,58,0.1);
+      --r: 14px;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; }
 
-    /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(10,10,10,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-    .logo{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:-.3px}
-    .logo span{color:var(--lime)}
-    .nav-links{display:flex;align-items:center;gap:4px}
-    .nav-links a{padding:8px 14px;font-size:.85rem;color:var(--muted);border-radius:8px;transition:color .2s,background .2s}
-    .nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(255,255,255,.06)}
-    .nav-cta{background:var(--lime)!important;color:var(--ink)!important;font-weight:700!important;border-radius:50px!important;padding:8px 20px!important}
-    .nav-cta:hover{background:var(--lime2)!important}
-    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
-    .hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:.3s}
-    .mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,10,10,.97);border-bottom:1px solid var(--border);padding:16px 24px;flex-direction:column;gap:4px;z-index:99}
-    .mobile-menu.open{display:flex}
-    .mobile-menu a{padding:12px 16px;font-size:.95rem;color:var(--muted);border-radius:8px}
-    .mobile-menu a:hover{color:var(--white);background:rgba(255,255,255,.06)}
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 68px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px;
+      background: rgba(245,242,236,0.9); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--navy); letter-spacing: -0.3px; }
+    .logo em { font-style: italic; color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { padding: 7px 14px; font-size: .85rem; font-weight: 500; color: var(--muted); border-radius: 8px; transition: color .2s, background .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--navy); background: rgba(26,31,58,0.06); }
+    .nav-cta { background: var(--navy) !important; color: white !important; border-radius: 50px !important; padding: 8px 22px !important; font-weight: 600 !important; }
+    .nav-cta:hover { background: var(--navy2) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; }
+    .mob { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(245,242,236,0.97); border-bottom: 1px solid var(--border); padding: 14px 24px; flex-direction: column; gap: 2px; z-index: 99; }
+    .mob.open { display: flex; }
+    .mob a { padding: 11px 14px; font-size: .92rem; color: var(--muted); border-radius: 8px; font-weight: 500; }
+    .mob a:hover { color: var(--navy); background: rgba(26,31,58,0.04); }
 
-    /* HERO */
-    .hero{min-height:100vh;display:flex;align-items:center;padding:100px 48px 80px;position:relative;overflow:hidden}
-    .hero-orb{position:absolute;border-radius:50%;pointer-events:none}
-    .orb1{width:500px;height:500px;top:-150px;right:-100px;background:radial-gradient(circle,rgba(184,255,87,.1) 0%,transparent 70%)}
-    .orb2{width:350px;height:350px;bottom:-100px;left:50px;background:radial-gradient(circle,rgba(184,255,87,.05) 0%,transparent 70%)}
-    .hero-inner{position:relative;z-index:1;max-width:700px}
-    .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(184,255,87,.08);border:1px solid rgba(184,255,87,.2);color:var(--lime);padding:6px 16px;border-radius:50px;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:32px}
-    .pill::before{content:'';width:6px;height:6px;background:var(--lime);border-radius:50%;animation:blink 2s ease infinite}
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-    h1{font-family:'Syne',sans-serif;font-size:clamp(3rem,7vw,6rem);font-weight:800;line-height:.95;letter-spacing:-2px;margin-bottom:28px}
-    h1 em{font-style:normal;color:var(--lime)}
-    .hero-sub{font-size:1.05rem;color:var(--muted);line-height:1.8;max-width:480px;margin-bottom:40px;font-weight:300}
-    .btn-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-    .btn-lime{background:var(--lime);color:var(--ink);padding:14px 32px;border-radius:50px;font-weight:700;font-size:.9rem;transition:all .25s;display:inline-block}
-    .btn-lime:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 6px 24px rgba(184,255,87,.3)}
-    .btn-ghost{background:transparent;color:var(--white);padding:14px 32px;border-radius:50px;font-weight:500;font-size:.9rem;border:1px solid rgba(255,255,255,.2);transition:all .25s;display:inline-block}
-    .btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05)}
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 120px 52px 80px;
+      background: var(--cream);
+      position: relative; overflow: hidden;
+    }
+    /* Decorative background shapes */
+    .hero::before {
+      content: '';
+      position: absolute; top: -100px; right: -200px;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,150,60,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -150px; left: -100px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,31,58,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 1100px; width: 100%; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; align-items: center; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+    .tag-line { width: 32px; height: 1px; background: var(--gold); }
+    .tag-text { font-size: .72rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+    h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.8rem, 5.5vw, 5rem); line-height: 1.05; letter-spacing: -1px; color: var(--navy); margin-bottom: 24px; }
+    h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub { font-size: 1.05rem; color: var(--muted); line-height: 1.8; max-width: 460px; margin-bottom: 40px; font-weight: 300; }
+    .hero-btns { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+    .btn-navy { background: var(--navy); color: white; padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: .92rem; transition: all .25s; display: inline-block; }
+    .btn-navy:hover { background: var(--navy2); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(26,31,58,0.25); }
+    .btn-outline-navy { background: transparent; color: var(--navy); padding: 14px 32px; border-radius: 50px; font-weight: 500; font-size: .92rem; border: 1.5px solid rgba(26,31,58,0.2); transition: all .25s; display: inline-block; }
+    .btn-outline-navy:hover { border-color: var(--navy); background: rgba(26,31,58,0.04); }
 
-    /* SECTIONS */
-    section{padding:90px 48px}
-    .label{font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--lime);margin-bottom:14px;display:block}
-    h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:16px}
-    .sub{font-size:.98rem;color:var(--muted);line-height:1.75;max-width:500px;font-weight:300}
+    /* Hero visual — stacked portfolio cards */
+    .hero-visual { position: relative; height: 520px; }
+    .hero-card {
+      position: absolute; border-radius: 18px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(26,31,58,0.15);
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+    }
+    .hero-card:hover { transform: scale(1.02) rotate(0deg) !important; z-index: 10; }
+    .hero-card img { width: 100%; height: 100%; object-fit: cover; }
+    .hc1 { width: 280px; height: 340px; top: 0; left: 20px; transform: rotate(-3deg); }
+    .hc2 { width: 260px; height: 320px; top: 40px; right: 0; transform: rotate(2deg); z-index: 2; }
+    .hc3 { width: 220px; height: 260px; bottom: 0; left: 60px; transform: rotate(1deg); z-index: 3; }
+    .hero-card-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; background: linear-gradient(to top, rgba(26,31,58,.85), transparent); color: white; font-size: .72rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
 
-    /* WORK PREVIEW */
-    .work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
-    .work-card{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;position:relative;background:var(--ink2)}
-    .work-card.big{grid-column:span 2;aspect-ratio:2/1}
-    .work-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1),filter .5s;filter:brightness(.75)}
-    .work-card:hover img{transform:scale(1.05);filter:brightness(.95)}
-    .work-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 55%)}
-    .work-tier{font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:5px}
-    .work-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--white);margin-bottom:10px}
-    .work-link{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2);padding:5px 12px;border-radius:50px;transition:all .2s}
-    .work-link:hover{color:var(--white);border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.07)}
-    .see-all{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-size:.88rem;font-weight:600;color:var(--lime);border:1px solid rgba(184,255,87,.25);padding:10px 22px;border-radius:50px;transition:all .2s}
-    .see-all:hover{background:rgba(184,255,87,.07);border-color:rgba(184,255,87,.5)}
+    /* ── SECTIONS ── */
+    section { padding: 90px 52px; }
+    .s-label { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .s-line { width: 28px; height: 1px; background: var(--gold); }
+    .s-tag { font-size: .7rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); }
+    h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.9rem, 3.5vw, 2.8rem); line-height: 1.1; letter-spacing: -.5px; color: var(--navy); margin-bottom: 16px; }
+    h2 em { font-style: italic; }
+    .s-sub { font-size: .98rem; color: var(--muted); line-height: 1.75; max-width: 500px; font-weight: 300; }
 
-    /* REVIEWS */
-    .reviews-banner{background:var(--ink2);border-radius:var(--r);padding:52px 48px;margin-top:52px;text-align:center;border:1px solid var(--border)}
-    .reviews-banner h3{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:12px}
-    .reviews-banner p{color:var(--muted);line-height:1.75;max-width:520px;margin:0 auto 28px;font-weight:300}
-    .review-link{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:var(--ink);padding:12px 28px;border-radius:50px;font-weight:700;font-size:.9rem;transition:all .25s}
-    .review-link:hover{background:var(--lime2);transform:translateY(-2px)}
+    /* ── WORK ── */
+    .work-bg { background: var(--navy); }
+    .work-bg h2 { color: white; }
+    .work-bg .s-sub { color: rgba(255,255,255,.5); }
+    .work-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 48px; }
+    .wc { border-radius: var(--r); overflow: hidden; aspect-ratio: 4/3; position: relative; background: var(--navy2); }
+    .wc.wide { grid-column: span 2; aspect-ratio: 2/1; }
+    .wc img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s cubic-bezier(.4,0,.2,1), filter .55s; filter: brightness(.7) saturate(.9); }
+    .wc:hover img { transform: scale(1.06); filter: brightness(.95) saturate(1); }
+    .wc-info { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 22px; background: linear-gradient(to top, rgba(26,31,58,.88) 0%, transparent 55%); }
+    .wc-tier { font-size: .6rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 4px; }
+    .wc-name { font-family: 'DM Serif Display', serif; font-size: 1rem; color: white; margin-bottom: 10px; }
+    .wc-link { display: inline-flex; align-items: center; gap: 5px; font-size: .76rem; font-weight: 500; color: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.18); padding: 5px 12px; border-radius: 50px; transition: all .2s; }
+    .wc-link:hover { color: white; border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.07); }
 
-    /* REVEAL */
-    [data-r]{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1)}
-    [data-r].on{opacity:1;transform:none}
+    /* ── REVIEWS ── */
+    .reviews-box {
+      background: white; border-radius: 20px; padding: 60px 52px;
+      text-align: center; max-width: 700px; margin: 52px auto 0;
+      box-shadow: 0 4px 40px rgba(26,31,58,.07);
+      border: 1px solid var(--border);
+    }
+    .reviews-box h3 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--navy); margin-bottom: 14px; line-height: 1.2; }
+    .reviews-box p { color: var(--muted); line-height: 1.75; max-width: 480px; margin: 0 auto 28px; font-weight: 300; }
+    .btn-gold { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: white; padding: 12px 28px; border-radius: 50px; font-weight: 600; font-size: .9rem; transition: all .25s; }
+    .btn-gold:hover { background: #b8832e; transform: translateY(-2px); }
 
-    /* FOOTER */
-    footer{background:var(--ink2);border-top:1px solid var(--border);padding:36px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
-    .f-logo{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800}
-    .f-logo span{color:var(--lime)}
-    footer p{font-size:.8rem;color:rgba(255,255,255,.3)}
-    footer a{font-size:.8rem;color:rgba(255,255,255,.3);transition:color .2s}
-    footer a:hover{color:var(--lime)}
+    /* ── REVEAL ── */
+    [data-r] { opacity: 0; transform: translateY(30px); transition: opacity .7s cubic-bezier(.4,0,.2,1), transform .7s cubic-bezier(.4,0,.2,1); }
+    [data-r].on { opacity: 1; transform: none; }
 
-    @media(max-width:768px){
-      nav{padding:0 20px}
-      .nav-links{display:none}
-      .hamburger{display:flex}
-      .hero,.section{padding:80px 20px}
-      .hero{padding-top:90px}
-      section{padding:70px 20px}
-      .work-grid{grid-template-columns:1fr}
-      .work-card.big{grid-column:span 1;aspect-ratio:4/3}
-      .reviews-banner{padding:36px 24px}
-      footer{padding:28px 20px;flex-direction:column;text-align:center}
+    /* ── FOOTER ── */
+    footer { background: var(--navy); padding: 40px 52px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .f-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: white; }
+    .f-logo em { font-style: italic; color: var(--gold-light); }
+    footer p { font-size: .8rem; color: rgba(255,255,255,.35); }
+    footer a { font-size: .8rem; color: rgba(255,255,255,.35); transition: color .2s; }
+    footer a:hover { color: var(--gold-light); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 100px 20px 70px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { height: 280px; }
+      .hc1 { width: 200px; height: 240px; }
+      .hc2 { width: 180px; height: 220px; }
+      .hc3 { width: 160px; height: 190px; bottom: -10px; }
+      section { padding: 70px 20px; }
+      .work-grid { grid-template-columns: 1fr; }
+      .wc.wide { grid-column: span 1; aspect-ratio: 4/3; }
+      .reviews-box { padding: 40px 24px; }
+      footer { padding: 32px 20px; flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="logo">Get<span>Found</span>Local</a>
+  <a href="index.html" class="logo">Get Found <em>Local</em></a>
   <div class="nav-links">
     <a href="index.html" class="active">Home</a>
     <a href="work.html">Our Work</a>
@@ -116,7 +179,7 @@
     <span></span><span></span><span></span>
   </div>
 </nav>
-<div class="mobile-menu" id="mob">
+<div class="mob" id="mob">
   <a href="index.html">Home</a>
   <a href="work.html">Our Work</a>
   <a href="services.html">Services</a>
@@ -126,80 +189,77 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-orb orb1"></div>
-  <div class="hero-orb orb2"></div>
   <div class="hero-inner">
-    <div class="pill">Websites for Local Businesses</div>
-    <h1>Your business<br>deserves to<br>be <em>found.</em></h1>
-    <p class="hero-sub">We build beautiful, professionally designed websites for local businesses that don't have one yet — and manage everything so you never have to think about it.</p>
-    <div class="btn-row">
-      <a href="contact.html" class="btn-lime">Request Your Website →</a>
-      <a href="work.html" class="btn-ghost">See Our Work</a>
+    <div>
+      <div class="hero-tag"><div class="tag-line"></div><span class="tag-text">Web Design for Local Business</span></div>
+      <h1>Your business,<br>beautifully<br><em>online.</em></h1>
+      <p class="hero-sub">We build professional websites for local businesses that don't have one yet — and manage everything so you never have to think about it.</p>
+      <div class="hero-btns">
+        <a href="contact.html" class="btn-navy">Request Your Website</a>
+        <a href="work.html" class="btn-outline-navy">See Our Work</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card hc1">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt=""/>
+        <div class="hero-card-label">Nail Salon — Castle Rock</div>
+      </div>
+      <div class="hero-card hc2">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80" alt=""/>
+        <div class="hero-card-label">Restaurant — Evergreen</div>
+      </div>
+      <div class="hero-card hc3">
+        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=400&q=80" alt=""/>
+        <div class="hero-card-label">Auto Repair — Conifer</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- WORK PREVIEW -->
-<section style="padding-top:0;padding-bottom:90px;padding-left:48px;padding-right:48px">
-  <span class="label" data-r>Recent Work</span>
-  <h2 data-r>Sites We've Built</h2>
-  <p class="sub" data-r>A few examples of what we've put together for local businesses.</p>
+<!-- WORK -->
+<section class="work-bg">
+  <div class="s-label" data-r><div class="s-line" style="background:var(--gold-light)"></div><span class="s-tag" style="color:var(--gold-light)">Our Work</span></div>
+  <h2 data-r>Sites we've built<br>for real businesses</h2>
+  <p class="s-sub" data-r>Every one of these businesses had no website. We built it, sent it to them, and they didn't pay until they loved it.</p>
   <div class="work-grid">
-    <div class="work-card big" data-r>
-      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=900&q=80" alt="Nail Salon"/>
-      <div class="work-info">
-        <div class="work-tier">Basic — $399</div>
-        <div class="work-name">Happy Canyon Nails & Spa — Castle Rock, CO</div>
-        <a href="https://yourdailyrealtor-ctrl.github.io/happy-canyon-nails/" target="_blank" class="work-link">View Live Site ↗</a>
-      </div>
+    <div class="wc wide" data-r>
+      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=900&q=80" alt=""/>
+      <div class="wc-info"><div class="wc-tier">Basic — $399</div><div class="wc-name">Happy Canyon Nails & Spa · Castle Rock</div><a href="https://yourdailyrealtor-ctrl.github.io/happy-canyon-nails/" target="_blank" class="wc-link">View Site ↗</a></div>
     </div>
-    <div class="work-card" data-r>
-      <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt="Barbershop"/>
-      <div class="work-info">
-        <div class="work-tier">Standard — $799</div>
-        <div class="work-name">Ember & Oak Barbershop</div>
-        <a href="https://yourdailyrealtor-ctrl.github.io/premium-demo-v2/" target="_blank" class="work-link">View Live Site ↗</a>
-      </div>
+    <div class="wc" data-r>
+      <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt=""/>
+      <div class="wc-info"><div class="wc-tier">Standard — $799</div><div class="wc-name">Ember & Oak Barbershop</div><a href="https://yourdailyrealtor-ctrl.github.io/premium-demo-v2/" target="_blank" class="wc-link">View Site ↗</a></div>
     </div>
-    <div class="work-card" data-r>
-      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="Restaurant"/>
-      <div class="work-info">
-        <div class="work-tier">Basic — $399</div>
-        <div class="work-name">Favi's Café — Evergreen, CO</div>
-        <a href="https://yourdailyrealtor-ctrl.github.io/favis-cafe/" target="_blank" class="work-link">View Live Site ↗</a>
-      </div>
+    <div class="wc" data-r>
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt=""/>
+      <div class="wc-info"><div class="wc-tier">Basic — $399</div><div class="wc-name">Favi's Café · Evergreen</div><a href="https://yourdailyrealtor-ctrl.github.io/favis-cafe/" target="_blank" class="wc-link">View Site ↗</a></div>
     </div>
-    <div class="work-card" data-r>
-      <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80" alt="Auto Repair"/>
-      <div class="work-info">
-        <div class="work-tier">Basic — $399</div>
-        <div class="work-name">TRAK Automotive — Conifer, CO</div>
-        <a href="https://yourdailyrealtor-ctrl.github.io/trak-automotive/" target="_blank" class="work-link">View Live Site ↗</a>
-      </div>
+    <div class="wc" data-r>
+      <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80" alt=""/>
+      <div class="wc-info"><div class="wc-tier">Basic — $399</div><div class="wc-name">TRAK Automotive · Conifer</div><a href="https://yourdailyrealtor-ctrl.github.io/trak-automotive/" target="_blank" class="wc-link">View Site ↗</a></div>
     </div>
-    <div class="work-card" data-r>
-      <img src="https://images.unsplash.com/photo-1415369629372-26f2fe60c467?w=600&q=80" alt="Dog Grooming"/>
-      <div class="work-info">
-        <div class="work-tier">Basic — $399</div>
-        <div class="work-name">The Furman Dog Grooming — Evergreen, CO</div>
-        <a href="https://yourdailyrealtor-ctrl.github.io/furman-dog-grooming/" target="_blank" class="work-link">View Live Site ↗</a>
-      </div>
+    <div class="wc" data-r>
+      <img src="https://images.unsplash.com/photo-1415369629372-26f2fe60c467?w=600&q=80" alt=""/>
+      <div class="wc-info"><div class="wc-tier">Basic — $399</div><div class="wc-name">The Furman Dog Grooming · Evergreen</div><a href="https://yourdailyrealtor-ctrl.github.io/furman-dog-grooming/" target="_blank" class="wc-link">View Site ↗</a></div>
     </div>
   </div>
-  <a href="work.html" class="see-all" data-r>View all our work →</a>
+  <div style="margin-top:28px">
+    <a href="work.html" style="display:inline-flex;align-items:center;gap:8px;font-size:.88rem;font-weight:500;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);padding:10px 22px;border-radius:50px;transition:all .2s" onmouseover="this.style.color='white';this.style.borderColor='rgba(255,255,255,.4)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.15)'">View all work →</a>
+  </div>
 </section>
 
 <!-- REVIEWS -->
-<section style="background:var(--ink2);padding:90px 48px">
-  <div class="reviews-banner" data-r>
-    <h3>We're just getting started — and we'd love to hear from you.</h3>
-    <p>We don't have reviews yet — we think our websites speak for themselves. But if you're already a customer, we'd genuinely love to know what you think.</p>
-    <a href="https://g.page/r/review" target="_blank" class="review-link">⭐ Leave Us a Review</a>
+<section style="background:var(--cream2)">
+  <div class="s-label" data-r><div class="s-line"></div><span class="s-tag">Reviews</span></div>
+  <div class="reviews-box" data-r>
+    <h3>We're just getting started —<br>and we'd love your feedback.</h3>
+    <p>We don't have reviews yet. We let our work speak for itself. But if you've worked with us, we'd genuinely love to hear what you think — it means a lot to a new business.</p>
+    <a href="https://search.google.com/local/writereview?placeid=" target="_blank" class="btn-gold">⭐ Leave Us a Review</a>
   </div>
 </section>
 
 <footer>
-  <div class="f-logo">Get<span>Found</span>Local</div>
+  <div class="f-logo">Get Found <em>Local</em></div>
   <p>Serving local businesses across Colorado & the US</p>
   <a href="mailto:Get-Found-Local@outlook.com">Get-Found-Local@outlook.com</a>
 </footer>
